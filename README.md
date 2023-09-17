@@ -6,7 +6,7 @@ disk in a file? And then, did you have to read and parse that data later?
 Isn't it boring?
 
 JDB makes this tedious task fun. Essentially, it serializes PHP objects
-and arrays using json_encode and writes them to a file, and when it needs
+and arrays using json_encode and writes them to a file, and when needs
 to retrieve the data, it decodes it using json_decode and provides a pleasant
 interface to access, modify (iterate, filter, paginate etc.) and dump back all
 of it to a file.
@@ -20,7 +20,12 @@ on Laravel, chill and relax? Then I'll ask back what if we are not on Laravel?
 ### Creating Database
 
 ```php
-require_once "lib/JDB.php";
+// file: /index.php
+require_once 'lib/bootstrap.php';
+
+use JDB\JDB;
+use JDB\Exception\DatabaseExistsException;
+use JDB\Exception\TableExistsException;
 
 try
 {
@@ -34,20 +39,20 @@ catch( DatabaseExistsException $e ){}
 catch( TableExistsException $e ){}
 ```
 
-This process results in the creation of two files.
+This process results in the creation of two files in your root directory.
 
-`data/usa/states.json`
+`/data/usa/states.json`
 ```JSON
 []
 ```
 
-`data/usa/states.meta.json`
+`/data/usa/states.meta.json`
 ```JSON
 {"current_id":0,"rows":0}
 ```
 
 If you attempt to create a database or a table that already exists,
-an exception will be thrown for both state.
+an exception will be thrown for both issue.
 
 ### Accessing An Existing Table
 
@@ -142,7 +147,7 @@ Arizona, Washington, California, Texas,
 ### Filtering Rows
 ```PHP
 $states
-  ->filter( fn( Row $state, int $index, Collection $collection ) =>
+  ->filter( fn( Row $state ) =>
       $state->capital === true
   )
   ->each( function( Row $capitalState )
@@ -155,12 +160,12 @@ $states
 Washington,
 ```
 
-The filter method returns a new collection that contains only the elements matching the given conditions. However, if a Row object's `delete` method called then that Row will be removed from all collections. Please keep this rule in mind.
+The filter method returns a new collection that contains only the elements matching the given conditions. However, if a Row object's `delete` method called then that Row will be removed from all the collections in the runtime and as well as json file. Please keep this rule in mind.
 
 ### Mapping Rows
 ```PHP
 $states
-  ->map( fn( Row $state, int $index, Collection $collection ) =>
+  ->map( fn( Row $state ) =>
     $state->capital? "true" : "false"
   )
   ->each( function( bool $isCapital )
@@ -175,12 +180,14 @@ false, true, false, false,
 
 ### Manipulating Rows
 
-Manipulations are performed in server memory. This means that unless explicitly stated to save to a file, they will not be saved to a file.
+Manipulations are performed in the server's memory. This means that unless explicitly stated to save to a file, they will not be saved to a file.
 
 #### Updating Field Value
 ```PHP
 $states
-  ->filter( fn( Row $state ) => $state->capital === null )
+  ->filter( fn( Row $state ) =>
+    $state->capital === null
+  )
   ->each( function( Row $state )
   {
     $state->capital = false;
@@ -189,7 +196,7 @@ $states
 $states->save();
 ```
 
-Please note that collections do not have a save method, but tables do have it!
+> Please note that **collections do not have** a save method, but **tables do have** it!
 
 `data/usa/states.json`
 ```JSON
@@ -204,7 +211,9 @@ Please note that collections do not have a save method, but tables do have it!
 #### Removing Field From Row
 ```PHP
 $states
-  ->filter( fn( Row $state ) => $state->capital === false )
+  ->filter( fn( Row $state ) =>
+    $state->capital === false
+  )
   ->each( function( Row $state )
   {
     $state->remove( "capital" );
@@ -228,7 +237,9 @@ $states->save();
 #### Renaming Field Name
 ```PHP
 $states
-  ->filter( fn( Row $state ) => $state->capital )
+  ->filter( fn( Row $state ) =>
+    $state->capital
+  )
   ->each( fn( Row $state ) =>
     $state->rename( "capital", "is_capital" );
   );
@@ -250,7 +261,7 @@ $states->save();
 ```PHP
 $states
   ->filter( fn( Row $state ) =>
-    ! $state->capital
+    $state->capital !== null
   )
   ->each( fn( Row $state ) =>
     $state->delete()
