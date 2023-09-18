@@ -66,10 +66,7 @@ class Row implements Collectable
 	 */
 	public function __unset( string $fieldName ): void
 	{
-		unset(
-			$this->original->{ $fieldName }
-		);
-
+		unset( $this->original->{ $fieldName });
 		$this->table->isDirty = true;
 	}
 
@@ -136,7 +133,7 @@ class Row implements Collectable
 	{
 		foreach( $this->collectionStack as $item )
 		{
-			list( $collection, $index ) = $item;
+			[ $collection, $index ] = $item;
 			$collection->forget( $index );
 		}
 

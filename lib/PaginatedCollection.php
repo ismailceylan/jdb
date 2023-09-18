@@ -51,7 +51,7 @@ class PaginatedCollection
 	 */
 	public function page(): int
 	{
-		return max( 1, (int) ( $_GET[ 'page' ] ?? 1 ));
+		return max( 1, ((int) $_GET[ 'page' ]) ?? 1 );
 	}
 
 	/**
