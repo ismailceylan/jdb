@@ -43,4 +43,12 @@ class JDB
 		return $stack ?? [];
 	}
 
+	/**
+	 * Returns whether given database path like "data/{{dbname}}" is
+	 * exists or not.
+	 */
+	public static function databaseExists( string $path ): bool
+	{
+		return is_dir( Helpers::normalizePath( $path ));
+	}
 }
