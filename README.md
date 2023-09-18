@@ -51,21 +51,12 @@ This process results in the creation of two files in your root directory.
 {"current_id":0,"rows":0}
 ```
 
-If you attempt to create a database or a table that already exists,
-an exception will be thrown for both issue.
+> If you attempt to create a database or a table that already exists, an exception will be thrown for both issue.
 
 ### Accessing An Existing Table
 
 ```PHP
-try
-{
-  $database = JDB::connect( "data/usa" );
-
-  // accessing a table
-  $states = $database->table( "states" );
-}
-catch( DatabaseDoesntExistsException $e ){}
-catch( TableDoesntExistsException $e ){}
+  $states = JDB::connect( "data/usa" )->table( "states" );
 ```
 
 ### Inserting Data To Tables
