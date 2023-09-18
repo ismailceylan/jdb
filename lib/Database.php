@@ -92,6 +92,16 @@ class Database
 	}
 
 	/**
+	 * Returns whether the given table is exists or not.
+	 */
+	public function tableExists( string $tableName ): bool
+	{
+		return file_exists(
+			$this->path . $tableName . '.' . JDB::DBEXT
+		);
+	}
+	
+	/**
 	 * Creates a table.
 	 *
 	 * @throws TableExistsException when the table already exists
