@@ -17,34 +17,34 @@ trait Arrayify
 	 */
 	public function offsetSet( mixed $offset, mixed $value ): void
 	{
-        $this->data[ $offset ] = $value;
-    }
+		$this->data[ $offset ] = $value;
+	}
 
 	/**
 	 * Returns key exists.
 	 */
-    public function offsetExists( mixed $offset ): bool
+	public function offsetExists( mixed $offset ): bool
 	{
-        return isset( $this->data[ $offset ]);
-    }
+		return isset( $this->data[ $offset ]);
+	}
 
 	/**
 	 * Removes key.
 	 */
-    public function offsetUnset( mixed $offset ): void
+	public function offsetUnset( mixed $offset ): void
 	{
-        unset( $this->data[ $offset ]);
-    }
+		unset( $this->data[ $offset ]);
+	}
 
 	/**
 	 * Returns key's value.
 	 */
-    public function offsetGet( mixed $offset ): mixed
+	public function offsetGet( mixed $offset ): mixed
 	{
-        return isset( $this->data[ $offset ])
+		return isset( $this->data[ $offset ])
 			? $this->data[ $offset ]
 			: null;
-    }
+	}
 
 	/**
 	 * Returns current array item.
