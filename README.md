@@ -22,6 +22,8 @@ First, start by creating a database.
 
 `/index.php`
 ```php
+<?php
+
 require_once 'lib/bootstrap.php';
 
 use JDB\JDB;
@@ -45,6 +47,8 @@ If you attempt to create a database that already exists, an exception will be th
 If there is a database that you are sure exists, you can access it. We call this process ***connecting***.
 
 ```PHP
+<?php
+
 use JDB\Exception\DatabaseDoesntExistsException;
 
 try
@@ -63,6 +67,8 @@ If the database is not found, an exception is thrown.
 You can find out whether a database already exists before creating it, either by using the try-catch mechanism as above or by using a method.
 
 ```PHP
+<?php
+
 if( JDB::databaseExists( 'data/usa' ))
 {
   $usa = JDB::connect( 'data/usa' );
@@ -79,6 +85,8 @@ Whether this code runs for the first time or the 1000th time, you can access the
 You can get a list of all the databases you have created in a data repository.
 
 ```PHP
+<?php
+
 echo implode( ',', JDB::databases( 'data' ));
 ```
 
@@ -93,6 +101,8 @@ Please keep in mind that you can use multiple data repository if you want.
 Now you have a database. That means you can add tables in it.
 
 ```PHP
+<?php
+
 use JDB\Exception\TableExistsException;
 
 try
@@ -125,6 +135,8 @@ You can consider each array item in the data file as a row.
 Once you have created tables, you can now connect and perform operations on them.
 
 ```PHP
+<?php
+
 use JDB\Exception\TableDoesntExistsException;
 
 try
@@ -143,6 +155,8 @@ If the table is not found, an exception will be thrown.
 You can find out whether a table already exists before creating it, either by using the try-catch mechanism as above or by using a method.
 
 ```PHP
+<?php
+
 if( $usa::tableExists( 'usa' ))
 {
   $states = $usa->table( 'states' );
@@ -157,6 +171,8 @@ else
 #### Insert One Row At A Time
 
 ```php
+<?php
+
 $states->insert(
 [
   "name" => "Arizona",
@@ -188,6 +204,8 @@ $states->save();
 
 #### Insert Multiple Rows At A Time
 ```PHP
+<?php
+
 $row1 = [
   "name" => "California",
   "short": => "CA"
@@ -220,6 +238,8 @@ $states
 
 ### Getting Rows Count
 ```PHP
+<?php
+
 echo $states->length;
 ```
 
@@ -229,6 +249,8 @@ echo $states->length;
 
 ### Iterating Rows
 ```PHP
+<?php
+
 $states->each( function( Row $state, int $index, Collection $collection )
 {
   echo $state->name, ", ";
@@ -241,6 +263,8 @@ Arizona, Washington, California, Texas,
 
 ### Filtering Rows
 ```PHP
+<?php
+
 $capitalStates = fn( Row $state ) => $state->capital === true;
 
 $states
@@ -259,6 +283,8 @@ The filter method returns a new collection that contains only the elements match
 
 ### Mapping Rows
 ```PHP
+<?php
+
 $states
   ->map( fn( Row $state ) =>
     $state->capital? "true" : "false"
@@ -282,6 +308,8 @@ Manipulations are performed in the server's memory. This means that unless expli
 
 #### Updating Field Value
 ```PHP
+<?php
+
 $states
   ->filter( fn( Row $state ) =>
     $state->capital === null
@@ -308,6 +336,8 @@ $states->save();
 
 #### Removing Field From Row
 ```PHP
+<?php
+
 $states
   ->filter( fn( Row $state ) =>
     $state->capital === false
@@ -334,6 +364,8 @@ $states->save();
 
 #### Renaming Field Name
 ```PHP
+<?php
+
 $states
   ->filter( fn( Row $state ) =>
     $state->capital
@@ -357,9 +389,11 @@ $states->save();
 
 #### Removing Row From Table
 ```PHP
+<?php
+
 $states
   ->filter( fn( Row $state ) =>
-    $state->capital !== null
+    $state->capital === null
   )
   ->each( fn( Row $state ) =>
     $state->delete()
