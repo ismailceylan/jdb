@@ -91,7 +91,7 @@ class PaginatedCollection
 	 */
 	public function lastPage(): int
 	{
-		return max( 1, ceil( $this->collection->length / $this->perPage ))	;
+		return max( 1, ceil( $this->collection->length / $this->perPage ));
 	}
 
 	/**
