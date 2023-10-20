@@ -33,7 +33,7 @@ class Meta
 	/**
 	 * Sets a key.
 	 */
-	public function __set( string $key, string|int $val )
+	public function __set( string $key, string|int $val ): void
 	{
 		$this->overwrites[ $key ] = $val;
 	}
