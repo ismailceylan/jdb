@@ -83,10 +83,9 @@ class Table
 			)
 		);
 
-		$this->data = $this->data->map( function( $item, $index )
-		{
-			return new Row( $this, $this->data, $item, $index );
-		});
+		$this->data = $this->data->map( fn( $item, $index ) =>
+			new Row( $this, $this->data, $item, $index )
+		);
 	}
 
 	/**
