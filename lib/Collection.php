@@ -189,10 +189,9 @@ class Collection implements \Iterator, \ArrayAccess
 	 */
 	public function find( string|int $id ): null|Row
 	{
-		$result = $this->filter( function( Row $item ) use ( $id )
-		{
-			return $item->id === (int) $id;
-		});
+		$result = $this->filter( fn( Row $item ) =>
+			$item->id === (int) $id
+		);
 
 		return $result->isEmpty()
 			? null
