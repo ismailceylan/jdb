@@ -50,19 +50,19 @@ class Database
 	/**
 	 * Creates a database.
 	 * 
-	 * @throws Exception when filesystem related issues occured
+	 * @throws FileSystemException when filesystem related issues occured
 	 * @throws DatabaseExistsException when database already exists
 	 */
 	public static function create( string $name ): Database
 	{
 		if( self::exists( $name ))
 		{
-			throw new DatabaseExistsException( "\"$name\" database already exists." );
+			throw new DatabaseExistsException( $name );
 		}
 
 		if( ! mkdir( $name, 0777, true ))
 		{
-			throw new \Exception( "\"$name\" database can not created!" );
+			throw new FileSystemException( "\"$name\" database can not created!" );
 		}
 		
 		return self::connect( $name );
@@ -85,7 +85,7 @@ class Database
 	{
 		if( ! self::exists( $name ))
 		{
-			throw new DatabaseDoesntExistsException( "\"$name\" database doesn't exists." );
+			throw new DatabaseDoesntExistsException( $name );
 		}
 
 		return new self( $name );
@@ -113,9 +113,7 @@ class Database
 
 		if( file_exists( $dataFile ))
 		{
-			throw new TableExistsException(
-				"$this->name.$tableName table already exists."
-			);
+			throw new TableExistsException( "$this->name.$tableName" );
 		}
 		
 		file_put_contents( $dataFile, '[]' );
@@ -137,7 +135,7 @@ class Database
 
 		if( ! file_exists( $path ))
 		{
-			throw new TableDoesntExistsException( "$this->name.$tableName table doesn't exists." );
+			throw new TableDoesntExistsException( "$this->name.$tableName" );
 		}
 
 		return new Table( $this, $tableName );

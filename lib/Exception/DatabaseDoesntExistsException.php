@@ -7,5 +7,10 @@ namespace JDB\Exception;
  */
 class DatabaseDoesntExistsException extends \Exception
 {
-
+	public function __construct( string $dbname )
+	{
+		parent::__construct(
+			"\"$dbname\" database doesn't exists."
+		);
+	}
 }

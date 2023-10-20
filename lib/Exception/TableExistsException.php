@@ -7,5 +7,10 @@ namespace JDB\Exception;
  */
 class TableExistsException extends \Exception
 {
-
+	public function __construct( string $tableName )
+	{
+		parent::__construct(
+			"$tableName table already exists."
+		);
+	}
 }
