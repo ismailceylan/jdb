@@ -10,6 +10,9 @@ use JDB\Contracts\Collectable;
  */
 class Row implements Collectable
 {
+	/**
+	 * Collections list that holds this Row.
+	 */
 	public array $collectionStack = [];
 
 	/**

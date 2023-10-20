@@ -58,8 +58,9 @@ class Table
 	}
 
 	/**
-	 * It works like a proxy that directs method calls not
-	 * found on the Table class to collection.
+	 * It works like a proxy. When an undefined method called on this
+	 * object, it's gonna try to find that method on this table's
+	 * collection object.
 	 */
 	public function __call( string $name, array $args ): mixed
 	{
@@ -88,7 +89,10 @@ class Table
 		});
 	}
 
-	public function all()
+	/**
+	 * Returns all rows.
+	 */
+	public function all(): Collection
 	{
 		return $this->data;
 	}

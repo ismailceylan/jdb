@@ -30,7 +30,7 @@ class PaginatedCollection
 	}
 
 	/**
-	 * It's a syntactic sugar for extend method.
+	 * It's a short way for extend method.
 	 */
 	public function __set( string $key, mixed $val )
 	{
