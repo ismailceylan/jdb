@@ -193,9 +193,18 @@ class Collection implements \Iterator, \ArrayAccess
 			$item->id === (int) $id
 		);
 
-		return $result->isEmpty()
+		return $result->first();
+	}
+
+	/**
+	 * Returns first row in the collection. If the
+	 * collection is empty then null will be returned.
+	 */
+	public function first(): null|Row
+	{
+		return $this->isEmpty()
 			? null
-			: $result->data[ 0 ];
+			: $this->data[ 0 ];
 	}
 
 	/**
