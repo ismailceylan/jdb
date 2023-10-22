@@ -157,7 +157,7 @@ You can find out whether a table already exists before creating it, either by us
 ```PHP
 <?php
 
-if( $usa::tableExists( 'usa' ))
+if( $usa::tableExists( 'states' ))
 {
   $states = $usa->table( 'states' );
 }
