@@ -250,11 +250,12 @@ echo $states->length;
 ### Iterating Rows
 ```PHP
 <?php
+use JDB\Row;
+use JDB\Collection;
 
-$states->each( function( Row $state, int $index, Collection $collection )
-{
-  echo $state->name, ", ";
-});
+$states->each( fn( Row $state, int $index, Collection $collection ) =>
+  echo $state->name, ", "
+);
 ```
 
 ```
