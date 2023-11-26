@@ -126,6 +126,9 @@ class Table
 	 * 
 	 * Returns true if there are changes and the table and
 	 * metafile are saved successfully.
+	 * 
+	 * Returns false if failed to put changes into the file
+	 * because of the file system related issues.
 	 */
 	public function save(): null|bool
 	{
