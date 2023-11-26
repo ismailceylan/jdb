@@ -197,10 +197,8 @@ class Table
 		{
 			throw new FileSystemException( 'Renaming the table failed!' );
 		}
-		else
-		{
-			@rename( $this->metaPath, $newPathMeta );
-		}
+		
+		@rename( $this->metaPath, $newPathMeta );
 
 		return true;
 	}
